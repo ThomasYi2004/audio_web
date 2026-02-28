@@ -1,3 +1,27 @@
+# Voice Chat & Audio Demo Webapp
+
+This Next.js project now includes a fully automatic **voice chat** interface
+and a backup audio upload/player demo.  The browser uses the Web Speech API
+for speech-to-text (STT) and the SpeechSynthesis API for text-to-speech (TTS);
+the only server component is a simple Python FastAPI endpoint that generates
+text replies.
+
+## Voice Chat Features
+
+- **Automatic speech detection:** recognition starts and stops without buttons
+- **Browser-side STT:** recognized speech is converted to text locally
+- **Server communication:** text is POSTed to `/reply` and the JSON reply is
+  returned
+- **Browser TTS:** server text is spoken automatically
+- Works over `localhost` (https not required for development)
+
+## Audio Upload Demo (legacy)
+
+- Select an audio file to upload to `public/uploads`
+- Uploaded files are listed and playable
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -13,6 +37,24 @@ pnpm dev
 # or
 bun dev
 ```
+
+### Python backend
+
+The voice chat frontend sends recognized speech to `POST /reply` on a small
+FastAPI server.  Start it separately (in a new shell):
+
+```bash
+cd server
+python -m venv .venv        # optional
+# activate the environment:
+#   source .venv/bin/activate   (macOS/Linux)
+#   .venv\Scripts\activate     (Windows PowerShell)
+pip install fastapi uvicorn
+uvicorn main:app --reload --port 8000
+```
+
+With both servers up, speak into your microphone and the app will reply
+verbally.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
